@@ -16,7 +16,7 @@ public class Bookstore {
         List<Book> bookstore = new ArrayList();
         List<MembershipCard> members = new ArrayList();
 
-        System.out.println(Book.getId());
+//        System.out.println(Book.getId());
 
         bookstore.add(new Book());
         bookstore.add(new Book());
@@ -98,8 +98,8 @@ public class Bookstore {
 
         } else System.out.println("Sorry. You need to be a member.");
 
-        System.out.println("Remaining books in the bookstore: ");
-        bookstore.forEach(book -> System.out.println(book));
+//        System.out.println("Remaining books in the bookstore: ");
+//        bookstore.forEach(book -> System.out.println(book));
     }
 
 }

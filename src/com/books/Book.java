@@ -1,5 +1,7 @@
 package com.books;
 
+import java.util.Objects;
+
 public class Book {
 
     private static int id = 1;
@@ -81,4 +83,16 @@ public class Book {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return getBookID() == book.getBookID() && Double.compare(book.getPrice(), getPrice()) == 0 && Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getGenre(), book.getGenre());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBookID(), getTitle(), getAuthor(), getGenre(), getPrice());
+    }
 }

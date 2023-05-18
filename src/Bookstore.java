@@ -45,61 +45,74 @@ public class Bookstore {
             }
         }
 
-        if (checkPIN) {
-            System.out.println("Hello " + customer + "! Choose an option: \n"+
-                                "1 - See our list of books \n" +
-                                "2 - Buy a book \n" +
-                                "3 - Recommend a book to add to our inventory \n" +
-                                "4 - Exit");
+        if (checkPIN) { // Customer can only have access to the service if a PIN number is provided
+            boolean cycle = true;
+            int counter2 = 1;
 
-            int input = scan.nextInt();
-            scan.nextLine();
+            while (cycle) { // Cycle through the menu until the customer chooses to exit
 
-            switch (input) {
-                case 1 -> bookstore.forEach(book -> System.out.println(book));
-                case 2 -> {
-                    System.out.print("Enter the title of the book you want to purchase: ");
-                    String title = scan.nextLine();
-                    int counter = 0;
-                    boolean purchasedBook = false;
+                if (counter2 == 1) System.out.println("Hello " + customer + "! Choose an option:");
+                else System.out.println("Is there anything else you need " + customer + "? Choose an option:");
 
-                    for (Book book : bookstore) {
-                        if (book.getTitle().equals(title)) {
-                            String discount = DiscountEligible.discount(book.getPrice()) ? "qualifies" : "doesn't qualify";
-                            System.out.println("This book " + discount + " for a 10% discount");
-                            System.out.println("The book \"" + book.getTitle() + "\" has been purchased. Thank you for shopping.");
+                System.out.println("1 - See our list of books \n" +
+                                   "2 - Buy a book \n" +
+                                   "3 - Recommend a book to add to our inventory \n" +
+                                   "4 - Exit");
 
-                            purchasedBook = true;
-                            break;
+                int input = scan.nextInt();
+
+                scan.nextLine();
+
+                switch (input) { //
+                    case 1 -> bookstore.forEach(book -> System.out.println(book));
+                    case 2 -> {
+                        System.out.print("Enter the title of the book you want to purchase: ");
+                        String title = scan.nextLine();
+                        int counter = 0;
+                        boolean purchasedBook = false;
+
+                        for (Book book : bookstore) {
+                            if (book.getTitle().equals(title)) {
+                                String discount = DiscountEligible.discount(book.getPrice()) ? "qualifies" : "doesn't qualify";
+                                System.out.println("This book " + discount + " for a 10% discount");
+                                System.out.println("The book \"" + book.getTitle() + "\" has been purchased. Thank you for shopping.");
+
+                                purchasedBook = true;
+                                break;
+                            }
+                            counter++;
                         }
-                        counter++;
+
+                        if (purchasedBook) {
+                            bookstore.remove(counter);
+
+                            System.out.println("Remaining books in the bookstore: ");
+                            bookstore.forEach(System.out::println);
+                        } else
+                            System.out.println("Sorry, no book has been found with that title.");
                     }
+                    case 3 -> {
+                        System.out.println("What book would you like to recommend for us to add? Enter title," +
+                                "author, genre, and the price in different lines: ");
 
-                    if (purchasedBook)
-                        bookstore.remove(counter);
-                    else
-                        System.out.println("Sorry, no book has been found with that title.");
+                        String title = scan.nextLine();
+                        String author = scan.nextLine();
+                        String genre = scan.nextLine();
+                        double price = scan.nextDouble();
+
+                        bookstore.add(new Book(title, author, genre, price));
+                        System.out.println("Thank you for your recommendation. We added the book to our inventory. Here is the list: ");
+                        bookstore.forEach(book -> System.out.println(book));
+                    }
+                    case 4 -> System.exit(0);
+                    default -> System.out.println("Sorry. The input you provided cannot be matched to an option. Try again");
                 }
-                case 3 -> {
-                    System.out.println("What book would you like to recommend for us to add? Enter title," +
-                                        "author, genre, and the price in different lines: ");
 
-                    String title = scan.nextLine();
-                    String author = scan.nextLine();
-                    String genre = scan.nextLine();
-                    double price = scan.nextDouble();
-
-                    bookstore.add(new Book(title, author, genre, price));
-                    System.out.println("Thank you for your recommendation. We added the book to our inventory. Here is the list: ");
-                    bookstore.forEach(book -> System.out.println(book));
-                }
-                case 4 -> System.exit(0);
+                counter2++;
             }
 
         } else System.out.println("Sorry. You need to be a member.");
 
-//        System.out.println("Remaining books in the bookstore: ");
-//        bookstore.forEach(book -> System.out.println(book));
     }
 
 }

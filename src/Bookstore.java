@@ -2,10 +2,7 @@ import com.books.Book;
 import com.membercard.DiscountEligible;
 import com.membercard.MembershipCard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -23,7 +20,7 @@ public class Bookstore {
         bookstore.add(new Book("Hello World", "John", "Fantasy", 59.99));
 
         members.add(new MembershipCard(123456, 1234, "Tom", "08/26"));
-        members.add(new MembershipCard(456789, 5678,"Bob", "05/24"));
+        members.add(new MembershipCard(456789, 5678, "Bob", "05/24"));
 
 //        System.out.println(Book.getId());
 //        bookstore.forEach(book -> System.out.println(book));
@@ -32,11 +29,23 @@ public class Bookstore {
 
         System.out.println("Welcome to the bookstore");
         System.out.print("Are you a member? Enter your PIN: ");
-        int pin = scan.nextInt();
+        int pin = -1;
+
+        while (pin < 0) {
+            try {
+                Scanner scan2 = new Scanner(System.in);
+                pin = scan2.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Input is not a number. Try again: ");
+            }
+            if (pin < 0) System.out.println("Input can't be a negative number. Try again: ");
+        }
 
         boolean checkPIN = false;
         String customer = "";
 
+        // If the input matches a PIN number from the members list than set the check to true
+        // Also record the name of the member who's PIN number matches the input
         for (MembershipCard member : members) {
             if (pin == member.getPin()) {
                 checkPIN = true;
@@ -55,9 +64,9 @@ public class Bookstore {
                 else System.out.println("Is there anything else you need " + customer + "? Choose an option:");
 
                 System.out.println("1 - See our list of books \n" +
-                                   "2 - Buy a book \n" +
-                                   "3 - Recommend a book to add to our inventory \n" +
-                                   "4 - Exit");
+                        "2 - Buy a book \n" +
+                        "3 - Recommend a book to add to our inventory \n" +
+                        "4 - Exit");
 
                 int input = scan.nextInt();
 
@@ -105,7 +114,8 @@ public class Bookstore {
                         bookstore.forEach(book -> System.out.println(book));
                     }
                     case 4 -> System.exit(0);
-                    default -> System.out.println("Sorry. The input you provided cannot be matched to an option. Try again");
+                    default ->
+                            System.out.println("Sorry. The input you provided cannot be matched to an option. Try again");
                 }
 
                 counter2++;

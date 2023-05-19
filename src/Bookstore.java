@@ -15,10 +15,12 @@ public class Bookstore {
 
 //        System.out.println(Book.getId());
 
+        // Books that will be in the inventory when program starts
         bookstore.add(new Book());
         bookstore.add(new Book());
         bookstore.add(new Book("Hello World", "John", "Fantasy", 59.99));
 
+        // Members that are allowed to access the bookstore service if they enter their PIN number
         members.add(new MembershipCard(123456, 1234, "Tom", "08/26"));
         members.add(new MembershipCard(456789, 5678, "Bob", "05/24"));
 
@@ -33,7 +35,7 @@ public class Bookstore {
 
         while (pin < 0) {
             try {
-                Scanner scan2 = new Scanner(System.in);
+                Scanner scan2 = new Scanner(System.in); // Have to use a second Scanner object so there won't be an infinite loop
                 pin = scan2.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Input is not a number. Try again: ");
@@ -68,9 +70,16 @@ public class Bookstore {
                         "3 - Recommend a book to add to our inventory \n" +
                         "4 - Exit");
 
-                int input = scan.nextInt();
 
-                scan.nextLine();
+                // Check the input to make sure it is a number
+                int input = 0;
+                Scanner scan3 = new Scanner(System.in);
+
+                try {
+                    input = scan3.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Please provide a number that matches the options");
+                }
 
                 switch (input) { //
                     case 1 -> bookstore.forEach(book -> System.out.println(book));

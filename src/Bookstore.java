@@ -35,12 +35,16 @@ public class Bookstore {
 
         while (pin < 0) {
             try {
-                Scanner scan2 = new Scanner(System.in); // Have to use a second Scanner object so there won't be an infinite loop
-                pin = scan2.nextInt();
+//                Scanner scan2 = new Scanner(System.in); // Have to use a second Scanner object so there won't be an infinite loop
+                pin = scan.nextInt(); // If your input is not a number the exception will be caught and any code below this line in the try block will be skipped
             } catch (InputMismatchException e) {
                 System.out.println("Input is not a number. Try again: ");
+                scan.nextLine(); // Better in the catch block since this is only needed if the input is not a number.
             }
             if (pin < 0) System.out.println("Input can't be a negative number. Try again: ");
+
+//            System.out.println(pin); // If there is an exception, then pin will stay -1
+//            scan.nextLine(); // This needs to be outside the try block because it will be skipped if below the scan.nextInt()
         }
 
         boolean checkPIN = false;
@@ -73,15 +77,19 @@ public class Bookstore {
 
                 // Check the input to make sure it is a number
                 int input = 0;
-                Scanner scan3 = new Scanner(System.in);
+//                Scanner scan3 = new Scanner(System.in);
 
                 try {
-                    input = scan3.nextInt();
+                    input = scan.nextInt();
                 } catch (InputMismatchException e) {
                     System.out.println("Please provide a number that matches the options");
                 }
 
-                switch (input) { //
+                // For this case, it is better to put this here than the catch block.
+                // This is because it will also handle the newline token after the scan.nextInt() consumes the number.
+                scan.nextLine();
+
+                switch (input) {
                     case 1 -> bookstore.forEach(book -> System.out.println(book));
                     case 2 -> {
                         System.out.print("Enter the title of the book you want to purchase: ");

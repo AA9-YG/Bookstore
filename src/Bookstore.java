@@ -140,6 +140,7 @@ public class Bookstore {
 
         } else System.out.println("Sorry. You need to be a member.");
 
+        scan.close();
     }
 
 }

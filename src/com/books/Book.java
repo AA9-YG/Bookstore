@@ -17,15 +17,15 @@ public class Book {
     private double price;
 
     public Book() {
-        bookID = id++;
+//        bookID = id++;
         title = "Book #" + bookID;
         author = "Author #" + bookID;
         genre = "N/A";
         price = 9.99;
     }
 
-    public Book(String title, String author, String genre, double price) {
-        bookID = id++;
+    public Book(int id, String title, String author, String genre, double price) {
+        bookID = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
